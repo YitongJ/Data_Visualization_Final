@@ -57,7 +57,7 @@ d <- d %>%
           "Primary_complete" = "lpc",
           "Secondary" = "ls",
           "Secondary_complete" = "lsc",
-          "Tertiary" = "lh",
+          "% of Tertiary" = "lh",
           "Tertiary_complete" = "lhc",
           "Schooling.year" = "yr_sch",
           "Average.tertiary.schooling" = "yr_sch_ter",
@@ -82,15 +82,15 @@ Exploring the patterns of women's educational attainment and childbearing and th
 
 **Description of Data and Source**
 
-The data I plan to use for the final project come from two datasets. The first one is the Barro-Lee dataset reported in Barro and Lee (2013), including 2,044 observations on 20 variables. The data reflect Barro-Lee estimates of educational attainment for the female population aged 25-64 from 1950 to 2015. This dataset is publicly available from the website: <http://www.barrolee.com/>. More information related to the detailed data sources and missing observations estimation were described in the original paper. Another one is the UN, World Population Prospects (2022) dataset available from <https://population.un.org/wpp/Download/> , which has 20,596 observations on 65 variables including the one of interest Mean Age Childbearing (years) from 1950 to 2100.In order to answer the research questions of this project, I extracted data of Mean Age Childbearing (years) in 1950-2015 and joined it to the Barro-Lee dataset.
+The data I used for this final project come from two datasets. The first one is the Barro-Lee dataset reported in Barro and Lee (2013), including 2,044 observations on 20 variables. The data reflect Barro-Lee estimates of educational attainment for the female population aged 25-64 years from 1950 to 2015. This dataset is publicly available from the website: <http://www.barrolee.com/>. More information related to the detailed data sources and missing observations estimation were described in the original paper. Another dataset is the United Nations World Population Prospects (2022) dataset available from <https://population.un.org/wpp/Download/>, which has 20,596 observations on 65 variables including the one of interest _Mean Age Childbearing (years)_ from 1950 to 2100. In order to answer the research questions of this project, I extracted data of _Mean Age Childbearing (years)_ in 1950-2015 and joined it to the Barro-Lee dataset.
 
 **Research Questions**
 
-This project focuses on three questions:
+This project focuses on four questions:
 
 1.  What is the relationship between the mean age of first childbearing and the average total years of schooling among the female population across different countries between 1950 and 2015?
 
-2.  How has the relationship between the female population and the average years of tertiary education for women in South Asian countries changed from 1950 to 2015?
+2.  How has the relationship between the population and the average years of tertiary education for women in South Asian countries changed from 1950 to 2015?
 
 3.  What is the trend in the total years of schooling for women in South Asian countries from 1950 to 2015?
 
@@ -116,7 +116,7 @@ table <- d1 %>%
     Primary_complete ~ "Primary completed",
     Secondary ~ "Secondary as highest level",
     Secondary_complete ~ "Secondary completed",
-    Tertiary ~ "Tertiary as highest level",
+    "% of Tertiary" ~ "Tertiary as highest level",
     Tertiary_complete ~ "Tertiary completed",
     Schooling.year ~ "Average years of total schooling",
     yr_sch_pri ~ "Average years of primary schooling",
@@ -171,6 +171,7 @@ p1 <- dclean %>%
    theme_minimal(base_size = 10) +
   labs(
     title = "A negative relationship was found between educational attainment and \n the mean age of childbearing for women worldwide (1950-2015)",
+    subtitle = "An increase of one unit in the educational attainment correlates with \n a decrease of 1.26 units in the mean age of childbearing",
     x = "Total years of schooling",
     y = "Mean age of childbearing",
     color = "Region",
@@ -188,11 +189,26 @@ theme(
   axis.ticks.length = unit(-0.5, "cm"),
   axis.line = element_line(color = "black"),
   panel.grid.major = element_blank()
- 
 )
 
 
-ggplotly(p1) 
+p1_plotly <- ggplotly(p1)
+
+p1_plotly <- p1_plotly %>%
+  layout(annotations = list(
+    text = 'Note: The sizes of the data points represent population sizes. \n Source: Barro and Lee (2013), http://www.barrolee.com/ \n UN, World Population Prospects, https://population.un.org/wpp/Download/',
+     x = 1.03,
+    y = -0.125, 
+    showarrow = FALSE,
+    xref = 'paper',
+    yref = 'paper',
+    xanchor = 'right',
+    yanchor = 'bottom',
+    font = list(
+      size = 5
+  )))
+
+p1_plotly
 
 ```
 
@@ -312,7 +328,7 @@ d3 <- dclean %>%
 
 plot2 <-  d3 %>%
   ggplot(aes(x=Population, y = Average.tertiary.schooling, color = country)) + 
-  geom_point(aes(size = Tertiary, frame = year)) +
+  geom_point(aes(size = `% of Tertiary`, frame = year)) +
     scale_color_viridis(discrete = TRUE)+
    theme_minimal(base_size = 10) +
   labs(
@@ -413,7 +429,7 @@ p2.1 <- layout(p2,
                list(
                  text = "Note: The sizes of the data points represent population sizes. <br>Source: Barro and Lee (2013), http://www.barrolee.com/ <br>UN, World Population Prospects, https://population.un.org/wpp/Download/",
                  x = 1.03,
-                 y = -0.085, # You might need to adjust this value based on your plot's layout
+                 y = -0.085, 
                  showarrow = FALSE,
                  xref = 'paper',
                  yref = 'paper',
@@ -443,7 +459,7 @@ d3.1 <- dclean %>%
 
 plot2 <-  d3.1 %>%
   ggplot(aes(x=Population, y = Average.tertiary.schooling, color = country)) + 
-  geom_point(aes(size = Tertiary)) +
+  geom_point(aes(size = `% of Tertiary`)) +
    theme_minimal(base_size = 10) +
   labs(
     title = "Relation between the female population and the average years of \n tertiary schooling for countries in South Asia in 2015",

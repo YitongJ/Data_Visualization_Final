@@ -5,6 +5,8 @@ output:
     orientation: columns
     vertical_layout: fill
     theme: flatly
+    source_code: embed
+    embed-resources: true
 ---
 
 ```{r setup, include=FALSE}
@@ -26,10 +28,10 @@ library(viridis)
 ```
 
 ```{r ,include=FALSE}
-woman <- import(here("BL_v3_F2564.csv"))%>%
+woman <- import(here("data","BL_v3_F2564.csv"))%>%
   as.tibble()
 
-child <- import(here("childbearing.csv"))%>%
+child <- import(here("data","childbearing.csv"))%>%
   as.tibble()
 
 child$country <- child$`Region, subregion, country or area *`
@@ -138,11 +140,22 @@ In this combined dataset, there are 1,862 observations for 23 variables. Based o
 
 ## Inputs {.sidebar}
 
-The variables in visualization 1 include the average years of total schooling, the mean age of childbearing, country names, region codes, population, and year. Specifically, ‘the average years of total schooling’ refers to the mean duration of education in primary, secondary, or tertiary institutions. ‘The mean age of childbearing’ refers to the average age at which women give birth to their first child. ‘Population’ is limited to the female population of each country. I aim to use this plot to show the relationship between educational attainment (i.e., the average years of total schooling) and the mean age of childbearing among the female population in countries around the world from 1950 to 2015.
+**A story of this visualization**
 
-In the second version, I added a linear model fit line to the plot showing the relationship between educational attainment and average childbearing age. To avoid covering the data, I didn't include confidence interval.
+This visualization aims to elucidate the relationship between educational attainment and the mean age of childbearing for women globally from 1950 to 2015, addressing the first research question. It incorporates variables such as the average years of total schooling, the mean age of childbearing, country names, region codes, the female population, and the year. Here, 'the average years of total schooling' denotes the average length of education received at primary, secondary, or tertiary institutions. 'The mean age of childbearing' is the average age at which women have their first child. 'Population' specifically refers to the female population of each country.
 
-Incorporating the feedback, I have adjusted the y-axis of the final version of plot to start from 24, to show a clearer pattern in the data. Additionally, I added a linear regression fit line to illustrate the correlation between women's educational attainment and the mean age of childbearing from 1950 to 2015.
+The analysis reveals an unexpected negative correlation between educational attainment and the mean age of childbearing for women worldwide during the period 1950-2015. A linear regression model indicates that an increase of one unit in the average years of total schooling correlates with a decrease of 1.26 units in the mean age of childbearing, on average, among the female population. However, it's important to recognize that this relationship may vary across different regions or countries, necessitating further investigation. 
+
+**The history and evolution of the visualization**
+
+In the original version, I utilized data solely from 2015, with data points colored by region (e.g., advanced economies, South Asia) and differentiated point sizes based on the female population of each country. Additionally, I set the y-axis to start at 0. In the second version, I enhanced the plot by adding a linear model fit line to demonstrate the relationship between educational attainment and average childbearing age. To ensure the data remained visible, I chose not to include the confidence interval.
+
+After integrating feedback for the final version, I adjusted the y-axis to begin at 24, aiming to highlight a more distinct pattern within the data. Furthermore, I also incorporated a linear regression fit line to depict the correlation between women's educational attainment and the mean age of childbearing spanning from 1950 to 2015.
+
+**Audience of this visualization**
+
+This visualization is designed for an audience with limited statistical background knowledge.
+
 
 ## Row {data-width="260"}
 
@@ -313,9 +326,20 @@ theme(
 
 ## Inputs {.sidebar}
 
-The aim of this visualization is to show the relationship between the female population and the average years of tertiary schooling for countries in South Asia from 1950 to 2015. Therefore, the variables include population, average years of tertiary schooling, country names, percentage of the population with tertiary education as the highest educational level, and year. Similar to visualization 1, I colored data points by country and distinguished point sizes based on the percentage of the female population with tertiary education as their highest educational level.
+**A story of this visualization**
 
-In the final version, I made the plot interactive, displaying data from 1950 to 2015 and featuring pop-up windows when viewers hover over data points. Given that the population growth rate can be exponential, I also added a panel that transforms the x-axis into logarithmic scale.
+The purpose of this visualization is to illustrate the relationship between the female population and the average years of tertiary education across countries in South Asia from 1950 to 2015. The variables presented include population, average years of tertiary schooling, country names, the percentage of the population with tertiary education as their highest level of educational attainment, and the year. The analysis of the plot reveals that, for Bangladesh, India and Pakistan, there is a general upward trend in both the average years of tertiary education and the percentage of population with tertiary schooling as the highest education level. In terms of Sri Lanka, the peak in both variables was observed in 2010, followed by a significant decline in 2015. For Nepal, Afghanistan, and Maldives, an obvious increase was observed only in the average years of tertiary schooling. 
+
+**The history and evolution of the visualization**
+
+In the original version, I color-coded data points by country and varied point sizes according to the percentage of the female population with tertiary education as their highest level of educational attainment.
+
+In the final version, I enhanced the plot to be interactive, showcasing data from 1950 to 2015 and including pop-up windows that appear when viewers hover over data points. Recognizing that population growth rates can be exponential, I also incorporated a panel that converts the x-axis to a logarithmic scale for a more nuanced interpretation of the data.
+
+**Audience of this visualization**
+
+The original panel of the visualization is designed for the general public, while the logarithmic panel is intended for an audience with a statistical background.
+
 
 ## Column {data-width="280"}
 
@@ -472,8 +496,8 @@ plot2 <-  d3.1 %>%
 theme(plot.title = element_markdown(size  = 10),
 legend.position = "right", # Position legend at the bottom
 legend.direction = "vertical", # Orient legend horizontally
-legend.title = element_text(size = 8), # Set legend title size
-legend.text = element_text(size = 8), # Set legend text size
+legend.title = element_text(size = 8), 
+legend.text = element_text(size = 8), 
 axis.line.x = element_line(color = "black"), 
   axis.line.y = element_line(color = "black"),
 ) +
@@ -492,9 +516,19 @@ plot2
 
 ## Inputs {.sidebar}
 
-The variables in visualization 3 include population, average years of total schooling, country names, and year, because I would like to use this plot to show the changing trends in educational attainment among women from countries in South Asia from 1950 to 2015. I colored the data lines by country.
+**A story of this visualization**
 
-In the second version, I changed the plot to be dynamic. However, I noticed that the change patterns of Maldives and Sri Lanka are different from those of other countries, to emphasize this, I developed the final version. Incorporating the feedback to this visualization, I removed the x and y axes lines, made sure there was space between the x-axis line and the x-axis labels, and added the country names as annotation at the end of each line and remove the legend. I also corrected the mistake of y axis title to 'average years of total schooling'.
+The purpose of this visualization is to illustrate the trend in the total years of schooling for women in South Asian countries from 1950 to 2015. The variables included in this visualization are the average years of total schooling, country names, and the year. The plot reveals that in countries like Afghanistan, Bangladesh, India, Nepal, and Pakistan, there has been a consistent rise in the average years of total schooling from 1950 to 2015, starting from less than two years. For the other two countries, the Maldives and Sri Lanka, the average years of educational attainment began at a level higher than two years. Sri Lanka has experienced a significant, accelerated improvement in educational attainment for women. Before 1985, the Maldives showed a steady increase in average schooling for the female population, which was followed by a sharp decline until 2000 and then a reversal to an increasing trend up until 2015. 
+
+**The history and evolution of the visualization**
+
+The original version featured data lines color-coded by country, with data points for every year and a separate legend for illustration. In the second version, I transformed the plot into a dynamic format. However, noticing that the patterns of change in Maldives and Sri Lanka differed from other countries, I developed the final version to highlight these distinctions.
+Based on feedback, in this final version, I eliminated the x and y axes lines, ensured there was space between the x-axis line and the x-axis labels, and annotated each line with country names, thereby removing the need for a legend. Additionally, I corrected the y-axis title to ‘Average Years of Total Schooling’. 
+
+**Audience of this visualization**
+
+This visualization is designed for the general public.
+
 
 
 ## Column {data-width="400"}
@@ -584,10 +618,10 @@ p3 <- ggplot(d4.1, aes(x = year, y = Schooling.year, group = country, color = co
        caption = "Source: Barro and Lee (2013), http://www.barrolee.com/ \n UN, World Population Prospects, https://population.un.org/wpp/Download/"
        ) +
   theme(
-legend.position = "right", # Position legend at the bottom
-legend.direction = "vertical", # Orient legend horizontally
-legend.title = element_text(size = 10), # Set legend title size
-legend.text = element_text(size = 6), # Set legend text size
+legend.position = "right", 
+legend.direction = "vertical", 
+legend.title = element_text(size = 10), 
+legend.text = element_text(size = 6), 
 axis.line.y = element_line(color = "black"), 
   axis.line.x = element_blank(),
 panel.grid.major.y = element_blank(),
@@ -620,10 +654,10 @@ p3 <- ggplot(d4.1, aes(x = year, y = Schooling.year, group = country, color = co
        color = "Country",
        caption = "Source: Barro and Lee (2013), http://www.barrolee.com/ \n UN, World Population Prospects, https://population.un.org/wpp/Download/") +
   theme(
-legend.position = "right", # Position legend at the bottom
-legend.direction = "vertical", # Orient legend horizontally
-legend.title = element_text(size = 10), # Set legend title size
-legend.text = element_text(size = 6), # Set legend text size
+legend.position = "right",
+legend.direction = "vertical", 
+legend.title = element_text(size = 10), 
+legend.text = element_text(size = 6),
 axis.line.y = element_line(color = "black"), 
   axis.line.x = element_blank(),
 panel.grid.major.y = element_blank(),
@@ -648,7 +682,19 @@ panel.grid.major.y = element_blank(),
 
 ```
 
+
 # Vis 4
+
+## Inputs {.sidebar}
+
+**A story of this visualization**
+
+For this visualization, I crafted a GIF to dynamically illustrate how the total years of schooling across different educational levels for women in the U.S. evolved from 1950 to 2015. It is apparent that the average duration of primary education has seen little change post-1975, whereas the average duration of tertiary education has experienced a considerable rise during this 65-year timeframe.
+
+**Audience of this visualization**
+
+This visualization is designed for the general public.
+
 
 ## Column {data-width="400"}
 
@@ -716,7 +762,7 @@ img_list <- lapply(imgs, image_read)
 ## join the images together
 img_joined <- image_join(img_list)
 
-## animate at 2 frames per second
+## animate at 0.5 frames per second
 img_animated <- image_animate(img_joined, fps = 0.5)
 
 ## view animated image

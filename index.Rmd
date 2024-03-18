@@ -689,7 +689,7 @@ panel.grid.major.y = element_blank(),
 
 **A story of this visualization**
 
-For this visualization, I crafted a GIF to dynamically illustrate how the total years of schooling across different educational levels for women in the U.S. evolved from 1950 to 2015. It is apparent that the average duration of primary education has seen little change post-1975, whereas the average duration of tertiary education has experienced a considerable rise during this 65-year timeframe.
+For this visualization, I crafted a GIF to dynamically illustrate how the total years of schooling across different educational levels for women in the U.S. evolved from 1950 to 2015. It is apparent that the average duration of primary education has seen little change post-1975, whereas the average duration of tertiary education has experienced a considerable rise during this 65-year timeframe. Unfortunately, even though I tried different approaches, I didn't succeed in calibrating the y-axes to uniform ranges, which might impact the readability of the plot. 
 
 **Audience of this visualization**
 
